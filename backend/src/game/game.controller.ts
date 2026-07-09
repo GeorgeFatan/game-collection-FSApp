@@ -1,27 +1,41 @@
-import { Body, Controller, Get, Param, Post, Delete } from "@nestjs/common";
-import { GameService } from "./game.service";
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
+import { GameService } from './game.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { User } from '../auth/user.decorator';
 
-@Controller("games")
+@Controller('games')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Get()
-  findAll() {
-    return this.gameService.findAll();
-  }
+ @UseGuards(JwtAuthGuard)
+@Get()
+findAll(@User() user: any) {
+  return this.gameService.findAll(user.id);
+}
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.gameService.findOne(Number(id));
-  }
+@UseGuards(JwtAuthGuard)
+@Get(':id')
+findOne(@Param('id') id: string, @User() user: any) {
+  return this.gameService.findOne(Number(id), user.id);
+}
 
-  @Post()
-  create(@Body() data: any){
-    return this.gameService.create(data);
-  }
+@UseGuards(JwtAuthGuard)
+@Post()
+create(@Body() data: any, @User() user: any) {
+  return this.gameService.create(data, user.id);
+}
 
-  @Delete(":id")
-  delete(@Param("id") id: string) {
-    return this.gameService.delete(Number(id));
-  }
+@UseGuards(JwtAuthGuard)
+@Delete(':id')
+delete(@Param('id') id: string, @User() user: any) {
+  return this.gameService.delete(Number(id), user.id);
+}
 }

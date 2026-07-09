@@ -19,7 +19,13 @@ export function GameDetails() {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://localhost:3000/games/${id}`)
+    const token = localStorage.getItem("token");
+
+    fetch(`http://localhost:3000/games/${id}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => setGame(data))
       .catch((err) => console.error("Failed to load game:", err));
@@ -56,7 +62,6 @@ export function GameDetails() {
           className="w-64 h-80 object-cover rounded-xl shadow-lg mx-auto md:mx-0"
         />
 
-        
         <div className="space-y-4">
           <p className="text-gray-700">{game.description}</p>
 

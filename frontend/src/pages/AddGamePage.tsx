@@ -14,11 +14,14 @@ export default function AddGame(){
     const[rating,setRating] = useState("");
 
 
-    function handleAddGame(){
-        fetch("http://localhost:3000/games", {
+   function handleAddGame() {
+    const token = localStorage.getItem("token");
+
+    fetch("http://localhost:3000/games", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
             title,
@@ -30,9 +33,10 @@ export default function AddGame(){
             rating,
         }),
     }).then(() => {
-        navigate("/");
+        navigate("/Shelf");
     });
 }
+
 
 return(
     <div className="add-game-page" style={{ marginTop: "20px" }}>
