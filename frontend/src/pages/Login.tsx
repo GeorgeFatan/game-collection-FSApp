@@ -34,19 +34,19 @@ export default function Login() {
 
         <h2 style={{marginTop: "100px"}}>Please login to your account....</h2>
 
-            <input
+            <input style={{marginRight: "15px"}}
                type="email"
                placeholder="Email"
                value={email}
                onChange={(e) => setEmail(e.target.value)}
             />
-            <input 
+            <input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button className="nav-button" type="submit">Login</button>
+            <button className="nav-button" type="submit" style={{marginLeft: "15px"}}>Login</button>
        </form>
     );
 }

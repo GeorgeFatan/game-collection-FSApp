@@ -187,3 +187,10 @@ body::before {
 .add-game-page textarea {
   min-height: 120px;
 }
+
+.cover-image {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 6px;
+}

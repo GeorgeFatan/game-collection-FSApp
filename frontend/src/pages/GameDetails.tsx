@@ -57,9 +57,15 @@ export function GameDetails() {
 
        
         <img
-          src={game.coverUrl}
+          src={game.coverUrl} style={{
+             width: "350px",
+                height: "400px",
+                objectFit: "cover",
+                borderRadius: "6px",
+                marginTop: "10px"
+          }}
           alt={game.title}
-          className="w-64 h-80 object-cover rounded-xl shadow-lg mx-auto md:mx-0"
+          
         />
 
         <div className="space-y-4">

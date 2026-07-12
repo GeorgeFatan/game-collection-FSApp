@@ -38,4 +38,16 @@ create(@Body() data: any, @User() user: any) {
 delete(@Param('id') id: string, @User() user: any) {
   return this.gameService.delete(Number(id), user.id);
 }
+
+@Get('rawg/:id')
+async getRawgDetails(@Param('id') id: string){
+  const apiKey = process.env.RAWG_KEY;
+
+  const res = await fetch(
+    `https://api.rawg.io/api/games/${id}?key=${apiKey}`
+  );
+  const data = await res.json();
+  return data;
+}
+
 }
