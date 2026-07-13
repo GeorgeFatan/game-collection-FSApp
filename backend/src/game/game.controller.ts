@@ -15,6 +15,17 @@ import { User } from '../auth/user.decorator';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
+
+  @Get('rawg/:id')
+  async getRawgDetails(@Param('id') id: string){
+    const apiKey = process.env.RAWG_KEY;
+
+    const res = await fetch(
+      `https://api.rawg.io/api/games/${id}?key=${apiKey}`
+    );
+    return await res.json();
+  }
+
  @UseGuards(JwtAuthGuard)
 @Get()
 findAll(@User() user: any) {
@@ -37,17 +48,6 @@ create(@Body() data: any, @User() user: any) {
 @Delete(':id')
 delete(@Param('id') id: string, @User() user: any) {
   return this.gameService.delete(Number(id), user.id);
-}
-
-@Get('rawg/:id')
-async getRawgDetails(@Param('id') id: string){
-  const apiKey = process.env.RAWG_KEY;
-
-  const res = await fetch(
-    `https://api.rawg.io/api/games/${id}?key=${apiKey}`
-  );
-  const data = await res.json();
-  return data;
 }
 
 }

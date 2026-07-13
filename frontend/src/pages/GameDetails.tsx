@@ -73,7 +73,6 @@ export function GameDetails() {
 
           <div className="bg-white p-4 rounded-xl shadow-md space-y-2">
             <p><span className="font-semibold">Genre:</span> {game.genre}</p>
-            <p><span className="font-semibold">Platform:</span> {game.platform}</p>
             <p><span className="font-semibold">Release:</span> {game.releaseDate}</p>
             <p><span className="font-semibold">Rating:</span> {game.rating}</p>
           </div>

@@ -21,7 +21,6 @@ model Game {
   coverUrl    String
   description String
   genre       String
-  platform    String
   releaseDate String
   rating      String
 

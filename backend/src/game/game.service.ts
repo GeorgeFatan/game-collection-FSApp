@@ -5,15 +5,15 @@ import { PrismaService } from '../prisma.service';
 export class GameService {
   constructor(private prisma: PrismaService) {}
 
-  // Returnează DOAR jocurile userului logat
+  
   findAll(userId: number) {
     return this.prisma.game.findMany({
       where: { userId },
-      orderBy: { id: 'desc' } // opțional, cele mai noi primele
+      orderBy: { id: 'desc' }
     });
   }
 
-  // Returnează un singur joc (doar dacă aparține userului)
+  
   findOne(id: number, userId: number) {
     return this.prisma.game.findFirst({
       where: {
@@ -23,7 +23,7 @@ export class GameService {
     });
   }
 
-  // Creează jocul pentru userul logat
+  
   create(data: any, userId: number) {
     return this.prisma.game.create({
       data: {
@@ -31,7 +31,6 @@ export class GameService {
         coverUrl: data.coverUrl,
         description: data.description,
         genre: data.genre,
-        platform: data.platform,
         releaseDate: data.releaseDate,
         rating: data.rating,
         user: {
@@ -41,7 +40,7 @@ export class GameService {
     });
   }
 
-  // Șterge jocul DOAR dacă aparține userului logat
+  
   delete(id: number, userId: number) {
     return this.prisma.game.deleteMany({
       where: {

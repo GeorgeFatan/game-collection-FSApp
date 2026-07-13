@@ -9,7 +9,6 @@ export default function AddGame(){
     const[coverUrl,setCoverUrl] = useState("");
     const[description,setDescription] = useState("");
     const[genre,setGenre] = useState("");
-    const[platform,setPlatform] = useState("");
     const[releaseDate,setReleaseDate] = useState("");
     const[rating,setRating] = useState("");
     const rawgApiKey = import.meta.env.VITE_RAWG_KEY;
@@ -37,11 +36,9 @@ export default function AddGame(){
             const details = await detailsRes.json()
             setCoverUrl(game.background_image || "");
 
-           
             setGenre(game.genres?.map((g: any) => g.name).join(", ") || "");
             setReleaseDate(game.released || "");
             setDescription(details.description_raw || "");
-            setPlatform(details.platforms?.map((p:any) => p.platform.name).join(", ") || "");
             setRating(game.rating?.toString() || "");
         } catch (err){
             console.error("Error fetching game:", err);
@@ -63,7 +60,6 @@ export default function AddGame(){
             coverUrl,
             description,
             genre,
-            platform,
             releaseDate,
             rating,
         }),
