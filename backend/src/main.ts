@@ -6,7 +6,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'https://localhost:5173',
+      'http://localhost:5173',
       'https://game-collection-fsapp.vercel.app',
     ],
     credentials: true,
