@@ -1,5 +1,8 @@
 GameShelf Collection
 
+LIVE DEMO:
+            https://game-collection-fs-app.vercel.app/
+
 GameShelf Collection is a personal full‑stack project built to help me understand how modern web applications are structured and how the frontend communicates with the backend. 
 The application allows users to create an account and manage their own video game collection.
 
