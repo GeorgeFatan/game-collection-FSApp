@@ -12,6 +12,8 @@ interface Game {
   rating: string;
 }
 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Shelf() {
   const [games, setGames] = useState<Game[]>([]);
   const navigate = useNavigate();
@@ -28,10 +30,10 @@ export default function Shelf() {
       return;
     }
 
-    fetch("http://localhost:3000/games", {
+    fetch(`${API_URL}/games`, {
       headers: {
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => {
         if (res.status === 401) {
@@ -55,11 +57,11 @@ export default function Shelf() {
   function deleteGame(id: number) {
     const token = localStorage.getItem("token");
 
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`${API_URL}/games/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }).then(() => loadGames());
   }
 
@@ -69,18 +71,27 @@ export default function Shelf() {
     navigate("/");
   }
 
-  function handleAbout()
-  {
-    navigate("/about")
+  function handleAbout() {
+    navigate("/about");
   }
-
 
   return (
     <div>
-      <button onClick={handleLogout} className="nav-button" style={{ marginTop: "20px", marginRight: "20px"}}>
+      <button
+        onClick={handleLogout}
+        className="nav-button"
+        style={{ marginTop: "20px", marginRight: "20px" }}
+      >
         Logout
       </button>
-       <button style ={{marginLeft: "10px"}} onClick={handleAbout} className="nav-button">About</button>
+
+      <button
+        style={{ marginLeft: "10px" }}
+        onClick={handleAbout}
+        className="nav-button"
+      >
+        About
+      </button>
 
       <h1>Game Shelf</h1>
 
@@ -95,7 +106,11 @@ export default function Shelf() {
       {games.map((game) => (
         <div
           key={game.id}
-          style={{marginBottom: "20px", textAlign: "center", marginTop: "15px",}}
+          style={{
+            marginBottom: "20px",
+            textAlign: "center",
+            marginTop: "15px",
+          }}
         >
           <Link
             to={`/game/${game.id}`}
@@ -104,7 +119,12 @@ export default function Shelf() {
             <img
               src={game.coverUrl}
               alt={game.title}
-              style={{width: "120px", height: "auto", borderRadius: "8px",marginBottom: "10px",}}
+              style={{
+                width: "120px",
+                height: "auto",
+                borderRadius: "8px",
+                marginBottom: "10px",
+              }}
             />
             <h2>{game.title}</h2>
           </Link>
