@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Layout } from "./components/Layout";
+//import { Layout } from "./components/Layout";
 import Shelf from "./pages/Shelf";
 import { GameDetails } from "./pages/GameDetails";
 import About from "./pages/About";
@@ -18,7 +18,6 @@ function App() {
       <Route path="add-game" element={<AddGame />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      
     </Routes>
   );
 }
