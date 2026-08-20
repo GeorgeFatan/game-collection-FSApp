@@ -8,6 +8,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:5173',
       'https://game-collection-fs-app.vercel.app',
+      /\.vercel\.app$/,
     ],
     credentials: true,
   });
