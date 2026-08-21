@@ -23,6 +23,7 @@ export default function Register() {
       <h2 style={{ marginTop: "100px" }}>Please register your account....</h2>
 
       <input
+        style={{ marginRight: "15px" }}
         type="email"
         placeholder="Email"
         value={email}
@@ -34,7 +35,11 @@ export default function Register() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="nav-button" type="submit">
+      <button
+        className="nav-button"
+        type="submit"
+        style={{ marginLeft: "15px" }}
+      >
         Register
       </button>
     </form>
