@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-//import { Layout } from "./components/Layout";
+import { Layout } from "./components/Layout";
 import Shelf from "./pages/Shelf";
 import { GameDetails } from "./pages/GameDetails";
 import About from "./pages/About";
@@ -12,10 +12,14 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
-      <Route path="shelf" element={<Shelf />} />
-      <Route path="game/:id" element={<GameDetails />} />
-      <Route path="about" element={<About />} />
-      <Route path="add-game" element={<AddGame />} />
+
+      <Route element={<Layout />}>
+        <Route path="shelf" element={<Shelf />} />
+        <Route path="game/:id" element={<GameDetails />} />
+        <Route path="about" element={<About />} />
+        <Route path="add-game" element={<AddGame />} />
+      </Route>
+
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
     </Routes>

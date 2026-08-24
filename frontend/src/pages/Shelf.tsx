@@ -69,71 +69,53 @@ export default function Shelf() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/");
+    window.dispatchEvent(new Event("storage"));
   }
 
-  function handleAbout() {
-    navigate("/about");
-  }
+  // function handleAbout() {
+  //   navigate("/about");
+  // }
 
   return (
-    <div>
-      <button
-        onClick={handleLogout}
-        className="nav-button"
-        style={{ marginTop: "20px", marginRight: "20px" }}
-      >
-        Logout
-      </button>
-
-      <button
-        style={{ marginLeft: "10px" }}
-        onClick={handleAbout}
-        className="nav-button"
-      >
-        About
-      </button>
-
-      <h1>Game Shelf</h1>
-
-      <Link to="/add-game" className="nav-button">
-        Add New Game to Collection!
-      </Link>
-
-      {games.length === 0 && (
-        <p style={{ marginTop: "20px" }}>No games found.</p>
-      )}
-
-      {games.map((game) => (
-        <div
-          key={game.id}
-          style={{
-            marginBottom: "20px",
-            textAlign: "center",
-            marginTop: "15px",
-          }}
-        >
-          <Link
-            to={`/game/${game.id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <img
-              src={game.coverUrl}
-              alt={game.title}
-              style={{
-                width: "120px",
-                height: "auto",
-                borderRadius: "8px",
-                marginBottom: "10px",
-              }}
-            />
-            <h2>{game.title}</h2>
-          </Link>
-
-          <button onClick={() => deleteGame(game.id)} className="nav-button">
-            Delete Game
+    <div className="shelf-page">
+      {/* Header sus */}
+      <div className="shelf-header">
+        <h1>Game Shelf</h1>
+        <div className="shelf-buttons">
+          <button onClick={handleLogout} className="nav-button">
+            Logout
           </button>
         </div>
-      ))}
+      </div>
+
+      <div className="shelf-buttons">
+        {/* Add Game button tot sus */}
+        <Link to="/add-game" className="nav-button add-game-btn">
+          Add New Game to Collection!
+        </Link>
+      </div>
+
+      {/* Conținut centrat */}
+      <div className="shelf-content">
+        {games.length === 0 && <p>No games found.</p>}
+
+        {games.map((game) => (
+          <div key={game.id} className="game-card">
+            <Link to={`/game/${game.id}`} className="game-link">
+              <img
+                src={game.coverUrl}
+                alt={game.title}
+                className="game-cover"
+              />
+              <h2>{game.title}</h2>
+            </Link>
+
+            <button onClick={() => deleteGame(game.id)} className="nav-button">
+              Delete Game
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
