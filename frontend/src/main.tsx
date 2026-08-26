@@ -5,6 +5,12 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import Sidebar from "./components/Sidebar";
 
+if (!sessionStorage.getItem("visited")) {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  sessionStorage.setItem("visited", "true");
+}
+
 function mountSidebar() {
   // verific if user == logged in
   const isLoggedIn = Boolean(localStorage.getItem("token"));
