@@ -17,6 +17,11 @@ export default function Login() {
       body: JSON.stringify({ email, password }),
     });
 
+    if (!res.ok) {
+      alert("Invalid credentials..");
+      return;
+    }
+
     const data = await res.json();
 
     localStorage.setItem("token", data.access_token);

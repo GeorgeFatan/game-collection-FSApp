@@ -1,4 +1,10 @@
 export default function Sidebar() {
+  const token = localStorage.getItem("token");
+
+  if (!token || token === "undefined") {
+    return null;
+  }
+
   return (
     <aside className="sidebar">
       {/* Header */}
