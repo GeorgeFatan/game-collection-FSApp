@@ -9,12 +9,28 @@ export default function Register() {
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
 
-    await await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    if (!email || !password) {
+      alert("Please enter your email and password..");
+      return;
+    }
 
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      },
+    );
+
+    // daca backend == error, registration failed
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.message || "Registration failed");
+      return;
+    }
+
+    // if everything good => mergi la login
     navigate("/login");
   }
 
