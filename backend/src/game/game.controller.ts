@@ -5,6 +5,7 @@ import {
   Delete,
   Param,
   Body,
+  Patch,
   UseGuards,
 } from '@nestjs/common';
 import { GameService } from './game.service';
@@ -15,39 +16,47 @@ import { User } from '../auth/user.decorator';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-
   @Get('rawg/:id')
-  async getRawgDetails(@Param('id') id: string){
+  async getRawgDetails(@Param('id') id: string) {
     const apiKey = process.env.RAWG_KEY;
 
     const res = await fetch(
-      `https://api.rawg.io/api/games/${id}?key=${apiKey}`
+      `https://api.rawg.io/api/games/${id}?key=${apiKey}`,
     );
     return await res.json();
   }
 
- @UseGuards(JwtAuthGuard)
-@Get()
-findAll(@User() user: any) {
-  return this.gameService.findAll(user.id);
-}
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  findAll(@User() user: any) {
+    return this.gameService.findAll(user.id);
+  }
 
-@UseGuards(JwtAuthGuard)
-@Get(':id')
-findOne(@Param('id') id: string, @User() user: any) {
-  return this.gameService.findOne(Number(id), user.id);
-}
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string, @User() user: any) {
+    return this.gameService.findOne(Number(id), user.id);
+  }
 
-@UseGuards(JwtAuthGuard)
-@Post()
-create(@Body() data: any, @User() user: any) {
-  return this.gameService.create(data, user.id);
-}
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(@Body() data: any, @User() user: any) {
+    return this.gameService.create(data, user.id);
+  }
 
-@UseGuards(JwtAuthGuard)
-@Delete(':id')
-delete(@Param('id') id: string, @User() user: any) {
-  return this.gameService.delete(Number(id), user.id);
-}
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  delete(@Param('id') id: string, @User() user: any) {
+    return this.gameService.delete(Number(id), user.id);
+  }
 
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/description')
+  updateDescription(
+    @Param('id') id: string,
+    @Body('description') description: string,
+    @User() user: any,
+  ) {
+    return this.gameService.updateDescription(Number(id), description, user.id);
+  }
 }
