@@ -120,7 +120,7 @@ export function GameDetails() {
               <div>
                 <p>{game.description}</p>
                 <button
-                  className="mt-2 px-4 py-2 bg-gray-700 text-white rounded"
+                  className="nav-button"
                   onClick={() => setIsEditing(true)}
                 >
                   Edit description
@@ -139,7 +139,7 @@ export function GameDetails() {
 
                 <div className="mt-2 flex gap-4">
                   <button
-                    className="px-4 py-2 bg-green-600 text-white rounded"
+                    className="nav-button"
                     onClick={handleSave}
                     disabled={isSaving}
                   >
