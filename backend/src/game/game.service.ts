@@ -63,4 +63,28 @@ export class GameService {
       message: 'Description updated successfully',
     };
   }
+
+  // update personal rating
+  async updatePersonalRating(
+    id: number,
+    personalRating: number,
+    userId: number,
+  ) {
+    const result = await this.prisma.game.updateMany({
+      where: { id, userId },
+      data: { personalRating },
+    });
+
+    if (result.count === 0) {
+      return {
+        success: false,
+        message: 'Game not found or unauthorized',
+      };
+    }
+
+    return {
+      success: true,
+      message: 'Personal rating updated',
+    };
+  }
 }

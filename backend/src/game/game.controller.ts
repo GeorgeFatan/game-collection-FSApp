@@ -23,6 +23,7 @@ export class GameController {
     const res = await fetch(
       `https://api.rawg.io/api/games/${id}?key=${apiKey}`,
     );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await res.json();
   }
 
@@ -58,5 +59,21 @@ export class GameController {
     @User() user: any,
   ) {
     return this.gameService.updateDescription(Number(id), description, user.id);
+  }
+
+  // personal rating endpoint
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/personal-rating')
+  updatePersonalRating(
+    @Param('id') id: string,
+    @Body('personalRating') personalRating: number,
+    @User() user: any,
+  ) {
+    return this.gameService.updatePersonalRating(
+      Number(id),
+      personalRating,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      user.id,
+    );
   }
 }

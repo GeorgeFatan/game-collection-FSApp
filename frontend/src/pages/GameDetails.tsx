@@ -10,15 +10,45 @@ interface Game {
   platform: string;
   releaseDate: string;
   rating: string;
+  personalRating?: number;
 }
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+function StarRatingSistem({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+}) {
+  const stars = [1, 2, 3, 4, 5];
+
+  return (
+    <div className="flex gap-1 mt-2">
+      {stars.map((star) => (
+        <span
+          key={star}
+          onClick={() => onChange(star)}
+          className={`cursor-pointer text-3xl ${
+            star <= value ? "text-yellow-400" : "text-gray-400"
+          }`}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export function GameDetails() {
   const { id } = useParams();
   const [game, setGame] = useState<Game | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState("");
+  const [personalRating, setPersonalRating] = useState<number>(
+    game?.personalRating ?? 0,
+  );
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,6 +66,10 @@ export function GameDetails() {
       .then((data) => {
         setGame(data);
         setDescription(data.description || "");
+        // syncronize personal rating when we have the data
+        if (data.personalRating !== undefined) {
+          setPersonalRating(data.personalRating);
+        }
       })
       .catch((err) => console.error("Failed to load game:", err));
   }, [id]);
@@ -65,6 +99,36 @@ export function GameDetails() {
       setIsEditing(false);
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function savePersonalRating() {
+    setIsSaving(true);
+
+    try {
+      if (!game) return; // save guard
+
+      const res = await fetch(`${API_URL}/games/${game.id}/personal-rating`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ personalRating }),
+      });
+      const result = await res.json();
+
+      if (!result.success) {
+        console.error(result.message);
+        return;
+      }
+
+      // actualizam local jocul
+      setGame((prev) => (prev ? { ...prev, personalRating } : prev)); // asa garantam ca game(prev).id nu este niciodata undefined
+    } catch (err) {
+      console.error(err);
     } finally {
       setIsSaving(false);
     }
@@ -167,6 +231,32 @@ export function GameDetails() {
             <p>
               <span className="font-semibold">Rating:</span> {game.rating}
             </p>
+          </div>
+          <div className="bg-white p-4 rounded-xl shadow-md mt-4">
+            <h3 className="font-semibold mb-2">
+              Your personal rating for the game
+            </h3>
+
+            <StarRatingSistem
+              value={Math.ceil(personalRating / 2)}
+              onChange={(stars) => {
+                const rating = stars * 2;
+                setPersonalRating(rating);
+                savePersonalRating();
+              }}
+            />
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={personalRating}
+              onChange={(e) => {
+                setPersonalRating(Number(e.target.value));
+                savePersonalRating();
+              }}
+              className="w-full mt-3"
+            />
+            <p className="mt-2 text-lg font-bold">{personalRating}/10</p>
           </div>
         </div>
       </div>

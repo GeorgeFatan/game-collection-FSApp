@@ -23,5 +23,6 @@ model Game {
   releaseDate String
   rating      String
   userId      Int
+  personalRating Int?
   user        User   @relation(fields: [userId], references: [id])
 }
