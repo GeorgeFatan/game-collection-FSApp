@@ -25,7 +25,7 @@ function StarRatingSistem({
   const boxes = [1, 2, 3, 4, 5];
 
   return (
-    <div className="flex gap-2 mt-2">
+    <div className="flex flex-row gap-2 mt-2 items-center">
       {boxes.map((box) => (
         <div
           key={box}
