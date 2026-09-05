@@ -46,9 +46,7 @@ export function GameDetails() {
   const [game, setGame] = useState<Game | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState("");
-  const [personalRating, setPersonalRating] = useState<number>(
-    game?.personalRating ?? 0,
-  );
+  const [personalRating, setPersonalRating] = useState<number>(0);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
