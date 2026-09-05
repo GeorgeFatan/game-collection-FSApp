@@ -22,20 +22,20 @@ function StarRatingSistem({
   value: number;
   onChange: (v: number) => void;
 }) {
-  const stars = [1, 2, 3, 4, 5];
+  const boxes = [1, 2, 3, 4, 5];
 
   return (
-    <div className="flex gap-1 mt-2">
-      {stars.map((star) => (
-        <span
-          key={star}
-          onClick={() => onChange(star)}
-          className={`cursor-pointer text-3xl ${
-            star <= value ? "text-yellow-400" : "text-gray-400"
-          }`}
+    <div className="flex gap-2 mt-2">
+      {boxes.map((box) => (
+        <div
+          key={box}
+          onClick={() => onChange(box)}
+          className={`w-8 h-8 cursor-pointer border rounded flex items-center justify-center text-xl
+            ${box <= value ? "bg-yellow-400 text-black" : "bg-gray-300 text-gray-600"}
+          `}
         >
-          ★
-        </span>
+          {box <= value ? "★" : "☆"}
+        </div>
       ))}
     </div>
   );
@@ -230,29 +230,18 @@ export function GameDetails() {
               <span className="font-semibold">Rating:</span> {game.rating}
             </p>
           </div>
+
           <div className="bg-white p-4 rounded-xl shadow-md mt-4">
             <h3 className="font-semibold mb-2">
               Your personal rating for the game
             </h3>
-
             <StarRatingSistem
-              value={Math.ceil(personalRating / 2)}
+              value={Math.ceil(personalRating / 2)} // convertim rating 1–10 în stele 1–5
               onChange={(stars) => {
                 const rating = stars * 2;
-                setPersonalRating(rating);
-                savePersonalRating();
+                setPersonalRating(rating); // update UI-ul
+                savePersonalRating(); // save
               }}
-            />
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value={personalRating}
-              onChange={(e) => {
-                setPersonalRating(Number(e.target.value));
-                savePersonalRating();
-              }}
-              className="w-full mt-3"
             />
             <p className="mt-2 text-lg font-bold">{personalRating}/10</p>
           </div>
