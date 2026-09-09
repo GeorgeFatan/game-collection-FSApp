@@ -90,7 +90,7 @@ export class GameService {
 
   // add games to favorite
   async updateFavorite(gameId: number, userId: number, isFavorite: boolean) {
-    return this.prisma.game.update({
+    return this.prisma.game.updateMany({
       where: { id: gameId, userId },
       data: { isFavorite },
     });
