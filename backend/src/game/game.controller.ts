@@ -79,6 +79,7 @@ export class GameController {
   }
 
   // favorite game endpoint
+  @UseGuards(JwtAuthGuard)
   @Patch(':id/favorite')
   updateFavorite(
     @Param('id') id: number,
