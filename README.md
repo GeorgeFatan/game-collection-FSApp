@@ -20,9 +20,8 @@ Frontend
   - React  
 Backend
   - NestJS  
-  - Prisma  
-  - PostgreSQL  
-  - JWT authentication  
+  - Prisma ORM
+  - JWT 
 
 Features
   - User registration and login  
