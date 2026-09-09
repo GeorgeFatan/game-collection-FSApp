@@ -78,7 +78,7 @@ export default function Shelf() {
 
   // function add to favorite
 
-  function addToFavorite(id) {
+  function addToFavorite(id: number) {
     const token = localStorage.getItem("token");
 
     fetch(`${API_URL}/games/${id}/favorite`, {

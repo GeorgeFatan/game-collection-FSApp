@@ -28,7 +28,7 @@ export default function FavoriteGames() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const favorites = data.filter((g) => g.isFavorite);
+        const favorites = data.filter((g: Game) => g.isFavorite);
         setGames(favorites);
       });
   }, []);
