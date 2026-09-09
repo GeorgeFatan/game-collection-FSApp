@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { User } from '../auth/user.decorator';
+import { AuthUser, User } from '../auth/user.decorator';
 import { Request } from 'express';
 
 @Controller('games')
@@ -85,8 +85,8 @@ export class GameController {
   updateFavorite(
     @Param('id') id: number,
     @Body() body: { isFavorite: boolean },
-    @Req() req: Request,
+    @User() user: AuthUser,
   ) {
-    return this.gameService.updateFavorite(id, req.user.id, body.isFavorite);
+    return this.gameService.updateFavorite(id, user.id, body.isFavorite);
   }
 }
