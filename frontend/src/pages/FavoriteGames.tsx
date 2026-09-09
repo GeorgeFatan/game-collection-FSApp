@@ -19,6 +19,21 @@ const API_URL = import.meta.env.VITE_API_BASE_URL;
 export default function FavoriteGames() {
   const [games, setGames] = useState<Game[]>([]);
 
+  function loadGames() {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_URL}/games`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const favorites = data.filter((g: Game) => g.isFavorite);
+        setGames(favorites);
+      });
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -32,7 +47,22 @@ export default function FavoriteGames() {
         const favorites = data.filter((g: Game) => g.isFavorite);
         setGames(favorites);
       });
+    loadGames();
   }, []);
+
+  // delete the game from fav category
+  function deleteGame(id: number) {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_URL}/games/${id}/favorite`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ isFavorite: false }),
+    }).then(() => loadGames());
+  }
 
   return (
     <div className="shelf-page">
@@ -51,6 +81,9 @@ export default function FavoriteGames() {
               />
               <h2>{game.title}</h2>
             </Link>
+            <button onClick={() => deleteGame(game.id)} className="nav-button">
+              Delete game from Favorite Games
+            </button>
           </div>
         ))}
       </div>

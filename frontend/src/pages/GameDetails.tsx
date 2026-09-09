@@ -170,10 +170,7 @@ export function GameDetails() {
             {error && <p className="text-red-500">{error}</p>}
 
             {!isEditing && !game.description && (
-              <button
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-                onClick={() => setIsEditing(true)}
-              >
+              <button className="nav-button" onClick={() => setIsEditing(true)}>
                 Add your personal description
               </button>
             )}

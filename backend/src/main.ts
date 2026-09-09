@@ -5,7 +5,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: 'https://game-collection-fs-app.vercel.app',
+    origin: [
+      'https://game-collection-fs-app.vercel.app',
+      'http://localhost:5173',
+    ],
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

@@ -135,6 +135,7 @@ export default function Shelf() {
             <button
               className="nav-button"
               onClick={() => addToFavorite(game.id)}
+              style={{ marginLeft: "5px" }}
             >
               Add to Favorite
             </button>

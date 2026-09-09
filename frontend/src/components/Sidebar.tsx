@@ -23,7 +23,7 @@ export default function Sidebar() {
             ➕ Add Game
           </a>
           <a href="/favorites" className="sidebar-link">
-            Favorite Games
+            ⭐ Favorite Games
           </a>
         </nav>
       </div>
@@ -31,7 +31,11 @@ export default function Sidebar() {
       {/* Footer */}
       <div className="sidebar-footer">
         GameShelfCollection
-        <a href="/about" className="sidebar-link">
+        <a
+          href="/about"
+          className="sidebar-link"
+          style={{ marginLeft: "10px" }}
+        >
           ⓘ About
         </a>
       </div>
