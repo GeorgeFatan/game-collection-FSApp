@@ -7,6 +7,7 @@ import AddGame from "./pages/AddGamePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainPage from "./pages/MainPage";
+import FavoriteGames from "./pages/FavoriteGames";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
 
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="favorites" element={<FavoriteGames />} />
     </Routes>
   );
 }

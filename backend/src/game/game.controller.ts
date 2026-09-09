@@ -76,4 +76,14 @@ export class GameController {
       user.id,
     );
   }
+
+  // favorite game endpoint
+  @Patch(':id/favorite')
+  updateFavorite(
+    @Param('id') id: number,
+    @Body() body: { isFavorite: boolean },
+    @Req() req,
+  ) {
+    return this.gameService.updateFavorite(id, req.user.id, body.isFavorite);
+  }
 }

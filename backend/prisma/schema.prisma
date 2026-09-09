@@ -24,5 +24,6 @@ model Game {
   rating      String
   userId      Int
   personalRating Int?
+  isFavorite  Boolean @default(false)
   user        User   @relation(fields: [userId], references: [id])
 }

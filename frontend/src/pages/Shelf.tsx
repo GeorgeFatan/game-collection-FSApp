@@ -76,6 +76,26 @@ export default function Shelf() {
   //   navigate("/about");
   // }
 
+  // function add to favorite
+
+  function addToFavorite(id) {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_URL}/games/${id}/favorite`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ isFavorite: true }),
+    }).then(() => {
+      // update UI
+      setGames((prev) =>
+        prev.map((g) => (g.id === id ? { ...g, isFavorite: true } : g)),
+      );
+    });
+  }
+
   return (
     <div className="shelf-page">
       {/* Header sus */}
@@ -109,10 +129,13 @@ export default function Shelf() {
               />
               <h2>{game.title}</h2>
             </Link>
-
             <button onClick={() => deleteGame(game.id)} className="nav-button">
               Delete Game
             </button>
+            <button onClick={() => addToFavorite(game.id)}>
+              Add to Favorite
+            </button>{" "}
+            {/*Add to favorite button*/}
           </div>
         ))}
       </div>

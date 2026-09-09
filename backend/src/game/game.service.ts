@@ -87,4 +87,12 @@ export class GameService {
       message: 'Personal rating updated',
     };
   }
+
+  // add games to favorite
+  async updateFavorite(gameId: number, userId: number, isFavorite: boolean) {
+    return this.prisma.game.update({
+      where: { id: gameId, userId },
+      data: { isFavorite },
+    });
+  }
 }
