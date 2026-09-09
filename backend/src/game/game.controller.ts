@@ -7,11 +7,12 @@ import {
   Body,
   Patch,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '../auth/user.decorator';
-import { Req } from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller('games')
 export class GameController {
@@ -84,7 +85,7 @@ export class GameController {
   updateFavorite(
     @Param('id') id: number,
     @Body() body: { isFavorite: boolean },
-    @Req() req,
+    @Req() req: Request,
   ) {
     return this.gameService.updateFavorite(id, req.user.id, body.isFavorite);
   }

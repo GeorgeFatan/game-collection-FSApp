@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Game {
   id: number;
@@ -34,17 +35,25 @@ export default function FavoriteGames() {
   }, []);
 
   return (
-    <div>
+    <div className="shelf-page">
       <h1>Favorite Games</h1>
 
       {games.length === 0 && <p>No favorite games yet.</p>}
 
-      {games.map((game) => (
-        <div key={game.id}>
-          <img src={game.coverUrl} alt={game.title} />
-          <h2>{game.title}</h2>
-        </div>
-      ))}
+      <div className="shelf-content">
+        {games.map((game) => (
+          <div key={game.id} className="game-card">
+            <Link to={`/game/${game.id}`} className="game-link">
+              <img
+                src={game.coverUrl}
+                alt={game.title}
+                className="game-cover"
+              />
+              <h2>{game.title}</h2>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
