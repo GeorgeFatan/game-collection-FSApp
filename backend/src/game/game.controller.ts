@@ -11,6 +11,7 @@ import {
 import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '../auth/user.decorator';
+import { Req } from '@nestjs/common';
 
 @Controller('games')
 export class GameController {
