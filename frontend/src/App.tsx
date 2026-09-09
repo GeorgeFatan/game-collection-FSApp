@@ -19,11 +19,11 @@ function App() {
         <Route path="game/:id" element={<GameDetails />} />
         <Route path="about" element={<About />} />
         <Route path="add-game" element={<AddGame />} />
+        <Route path="favorites" element={<FavoriteGames />} />
       </Route>
 
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      <Route path="favorites" element={<FavoriteGames />} />
     </Routes>
   );
 }
