@@ -132,9 +132,12 @@ export default function Shelf() {
             <button onClick={() => deleteGame(game.id)} className="nav-button">
               Delete Game
             </button>
-            <button onClick={() => addToFavorite(game.id)}>
+            <button
+              className="nav-button"
+              onClick={() => addToFavorite(game.id)}
+            >
               Add to Favorite
-            </button>{" "}
+            </button>
             {/*Add to favorite button*/}
           </div>
         ))}
