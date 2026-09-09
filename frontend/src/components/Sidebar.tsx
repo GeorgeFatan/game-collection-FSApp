@@ -22,6 +22,9 @@ export default function Sidebar() {
           <a href="/add-game" className="sidebar-link">
             ➕ Add Game
           </a>
+          <a href="/favorites" className="sidebar-link">
+            Favorite Games
+          </a>
         </nav>
       </div>
 
