@@ -83,10 +83,14 @@ export class GameController {
   @UseGuards(JwtAuthGuard)
   @Patch(':id/favorite')
   updateFavorite(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() body: { isFavorite: boolean },
     @User() user: AuthUser,
   ) {
-    return this.gameService.updateFavorite(id, user.id, body.isFavorite);
+    return this.gameService.updateFavorite(
+      Number(id),
+      user.id,
+      body.isFavorite,
+    );
   }
 }
