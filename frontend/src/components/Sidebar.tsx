@@ -1,9 +1,26 @@
+import { useEffect, useState } from "react";
+
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Sidebar() {
   const token = localStorage.getItem("token");
+  const [email, setEmail] = useState("");
 
   if (!token || token === "undefined") {
     return null;
   }
+
+  useEffect(() => {
+    fetch(`${API_URL}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setEmail(data.email);
+      });
+  }, []);
 
   return (
     <aside className="sidebar">
@@ -12,6 +29,19 @@ export default function Sidebar() {
         <div className="sidebar-logo">🎮</div>
         <span className="sidebar-title">GameShelf</span>
       </div>
+
+      {/*Greating LOL*/}
+      {email && (
+        <p
+          style={{
+            marginTop: "10px",
+            marginBottom: "-30px",
+            marginLeft: "10px",
+          }}
+        >
+          Hello, {email}
+        </p>
+      )}
 
       {/* NavBar content */}
       <div className="sidebar-content">
