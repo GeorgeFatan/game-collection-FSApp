@@ -25,18 +25,23 @@ function StarRatingSistem({
   const boxes = [1, 2, 3, 4, 5];
 
   return (
-    <div className="flex flex-row gap-2 mt-2 items-center">
-      {boxes.map((box) => (
-        <div
-          key={box}
-          onClick={() => onChange(box)}
-          className={`w-8 h-8 cursor-pointer border rounded flex items-center justify-center text-xl
-            ${box <= value ? "bg-yellow-400 text-black" : "bg-gray-300 text-gray-600"}
-          `}
-        >
-          {box <= value ? "★" : "☆"}
-        </div>
-      ))}
+    <div className="flex justify-center mt-2">
+      <span className="inline-flex flex-row gap-2 items-center">
+        {boxes.map((box) => (
+          <span
+            key={box}
+            onClick={() => onChange(box)}
+            style={{
+              width: "48px",
+              height: "48px",
+              fontSize: "32px",
+              cursor: "pointer",
+            }}
+          >
+            {box <= value ? "★" : "☆"}
+          </span>
+        ))}
+      </span>
     </div>
   );
 }
@@ -102,7 +107,7 @@ export function GameDetails() {
     }
   }
 
-  async function savePersonalRating() {
+  async function savePersonalRating(rating: number) {
     setIsSaving(true);
 
     try {
@@ -114,7 +119,7 @@ export function GameDetails() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ personalRating }),
+        body: JSON.stringify({ personalRating: rating }),
       });
       const result = await res.json();
 
@@ -171,7 +176,7 @@ export function GameDetails() {
 
             {!isEditing && !game.description && (
               <button className="nav-button" onClick={() => setIsEditing(true)}>
-                Add your personal description
+                Add your wanted description
               </button>
             )}
 
@@ -227,21 +232,22 @@ export function GameDetails() {
               <span className="font-semibold">Rating:</span> {game.rating}
             </p>
           </div>
+        </div>
+        <div className="bg-white p-4 rounded-xl shadow-md mt-4">
+          <h3 className="font-semibold mb-2">Your rating for the game..</h3>
 
-          <div className="bg-white p-4 rounded-xl shadow-md mt-4">
-            <h3 className="font-semibold mb-2">
-              Your personal rating for the game
-            </h3>
+          <div className="flex flex-row justify-center items-center gap-2 mt-2">
             <StarRatingSistem
-              value={Math.ceil(personalRating / 2)} // convertim rating 1–10 în stele 1–5
+              value={Math.ceil(personalRating / 2)}
               onChange={(stars) => {
                 const rating = stars * 2;
-                setPersonalRating(rating); // update UI-ul
-                savePersonalRating(); // save
+                setPersonalRating(rating);
+                savePersonalRating(rating);
               }}
             />
-            <p className="mt-2 text-lg font-bold">{personalRating}/10</p>
           </div>
+
+          <p className="mt-2 text-lg font-bold">{personalRating}/10</p>
         </div>
       </div>
     </div>
