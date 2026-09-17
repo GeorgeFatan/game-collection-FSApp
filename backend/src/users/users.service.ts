@@ -30,4 +30,27 @@ export class UsersService {
     const isValid = await bcrypt.compare(password, user.password);
     return isValid ? user : null;
   }
+
+  // profile pic
+  async updateAvatar(userId: number, avatarUrl: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { avatarUrl },
+      select: {
+        id: true,
+        email: true,
+        avatarUrl: true,
+      },
+    });
+  }
+  async findById(id: number) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        avatarUrl: true,
+      },
+    });
+  }
 }

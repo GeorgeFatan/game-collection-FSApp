@@ -6,6 +6,9 @@ export default function Sidebar() {
   const token = localStorage.getItem("token");
   const [email, setEmail] = useState("");
 
+  // avatar
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
   if (!token || token === "undefined") {
     return null;
   }
@@ -19,6 +22,7 @@ export default function Sidebar() {
       .then((res) => res.json())
       .then((data) => {
         setEmail(data.email);
+        setAvatarUrl(data.avatarUrl);
       });
   }, []);
 
@@ -32,15 +36,33 @@ export default function Sidebar() {
 
       {/*Greating LOL*/}
       {email && (
-        <p
+        <div
           style={{
-            marginTop: "10px",
-            marginBottom: "-30px",
+            marginTop: "15px",
             marginLeft: "10px",
+            marginBottom: "10px",
           }}
         >
-          Hello, {email}
-        </p>
+          <p style={{ marginBottom: "8px" }}>Hello, {email}</p>
+
+          {/* Poza de profil */}
+          {avatarUrl && (
+            <input
+              type="image"
+              src={avatarUrl}
+              alt="Profile"
+              style={{
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                objectFit: "cover",
+                border: "2px solid #f7eeff",
+                marginLeft: "90px",
+                marginBottom: "-50px",
+              }}
+            />
+          )}
+        </div>
       )}
 
       {/* NavBar content */}
