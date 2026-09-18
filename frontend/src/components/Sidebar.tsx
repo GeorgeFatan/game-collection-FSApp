@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -9,9 +9,7 @@ export default function Sidebar() {
   // avatar
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-  if (!token || token === "undefined") {
-    return null;
-  }
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch(`${API_URL}/me`, {
@@ -25,6 +23,26 @@ export default function Sidebar() {
         setAvatarUrl(data.avatarUrl);
       });
   }, []);
+
+  if (!token || token === "undefined") {
+    return null;
+  }
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch(`${API_URL}/users/upload-avatar`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+    const data = await res.json();
+    setAvatarUrl(data.url);
+  }
 
   return (
     <aside className="sidebar">
@@ -45,12 +63,20 @@ export default function Sidebar() {
         >
           <p style={{ marginBottom: "8px" }}>Hello, {email}</p>
 
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+
           {/* Poza de profil */}
           {avatarUrl && (
-            <input
-              type="image"
+            <img
               src={avatarUrl}
               alt="Profile"
+              onClick={() => fileInputRef.current?.click()}
               style={{
                 width: "60px",
                 height: "60px",
@@ -58,7 +84,8 @@ export default function Sidebar() {
                 objectFit: "cover",
                 border: "2px solid #f7eeff",
                 marginLeft: "90px",
-                marginBottom: "-50px",
+                cursor: "pointer",
+                marginBottom: "-45px",
               }}
             />
           )}

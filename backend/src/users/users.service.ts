@@ -1,9 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma.service';
+import { createClient } from '@supabase/supabase-js';
 
 @Injectable()
 export class UsersService {
+  private supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_KEY,
+  );
+
   constructor(private prisma: PrismaService) {}
 
   async findByEmail(email: string) {
@@ -43,6 +53,28 @@ export class UsersService {
       },
     });
   }
+
+  async uploadAvatar(userId: number, file: Express.Multer.File) {
+    const fileName = `avatar-${userId}-${Date.now()}.jpg`;
+
+    const { data, error } = await this.supabase.storage
+      .from('profile-picture')
+      .upload(fileName, file.buffer, {
+        contentType: file.mimetype,
+        upsert: true,
+      });
+    const publicUrl = this.supabase.storage
+      .from('profile-picture')
+      .getPublicUrl(fileName).data.publicUrl;
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { avatarUrl: publicUrl },
+    });
+
+    return { url: publicUrl };
+  }
+
   async findById(id: number) {
     return this.prisma.user.findUnique({
       where: { id },
