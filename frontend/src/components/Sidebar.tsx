@@ -10,6 +10,8 @@ export default function Sidebar() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isOpen, setIsOpen] = useState(true);
+
 
   useEffect(() => {
     fetch(`${API_URL}/me`, {
@@ -22,7 +24,24 @@ export default function Sidebar() {
         setEmail(data.email);
         setAvatarUrl(data.avatarUrl);
       });
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if(window.innerWidth < 768){
+        setIsOpen(false);
+      }
+      else
+      {
+        setIsOpen(true);
+      }
+    };
+
+    handleResize(); // this check the initial size of the window
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []
+  );
 
   if (!token || token === "undefined") {
     return null;
@@ -45,7 +64,16 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="sidebar">
+    <>
+    {/* Hamburger icon */}
+      <button
+        className="md:hidden p-3 text-white bg-gray-800 fixed top-2 left-2 z-50 rounded"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        ☰
+      </button>
+
+    <aside className={`sidebar ${isOpen ? "open" : "closed"}`}>
       {/* Header */}
       <div className="sidebar-header">
         <div className="sidebar-logo">🎮</div>
@@ -119,5 +147,6 @@ export default function Sidebar() {
         </a>
       </div>
     </aside>
+    </>
   );
 }
