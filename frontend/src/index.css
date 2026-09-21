@@ -221,6 +221,7 @@ body::before {
   box-shadow: 0 0 20px rgba(170, 59, 255, 0.3);
   border-right: 1px solid rgba(170, 59, 255, 0.2);
   overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 .sidebar-footer {
@@ -275,6 +276,13 @@ body::before {
   flex-direction: column;
   justify-content: flex-start;
   margin-top: 1rem;
+}
+
+.sidebar.closed{
+  transform: translateX(-100%);
+}
+.sidebar.open{
+  transform: translateX(0);
 }
 
 /*shelf css*/
