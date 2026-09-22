@@ -16,9 +16,9 @@ The main goal of this project is to gain hands‑on experience with full‑stack
 
 Technologies Used
   
-Frontend
+#Frontend
   - React  
-Backend
+#Backend
   - NestJS  
   - Prisma ORM
   - JWT 
