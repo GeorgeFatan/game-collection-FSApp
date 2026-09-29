@@ -2,6 +2,10 @@ GameShelf Collection
 
 LIVE DEMO: 
             https://game-collection-fs-app.vercel.app/
+!!!! Performance Notice (Render free tier) 
+            - The backend is hosted on Render using the free tier
+            - Free instances automatically spin down after periods of inactivity, which causes a cold start delay up to 50 seconds on the first user request of the day.
+            - This delay is not related to application performance or implementation quality, it is a limitation of the hosting plan
 
 The frontend (React + Vite) is deployed on Vercel
 The backend (NestJS) is deployed on Render
