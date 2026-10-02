@@ -66,8 +66,7 @@ export default function Sidebar() {
   return (
     <>
     {/* Hamburger icon */}
-      <button
-        className="md:hidden p-3 text-white bg-gray-800 fixed top-2 left-2 z-50 rounded"
+      <button className="hamburger-btn p-3 text-white bg-gray-800 fixed top-2 left-2 z-50 rounded"
         onClick={() => setIsOpen(!isOpen)}
       >
         ☰

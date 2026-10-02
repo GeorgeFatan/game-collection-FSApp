@@ -285,6 +285,14 @@ body::before {
   transform: translateX(0);
 }
 
+/* Hamburger button */
+@media(min-width: 1700px)
+{
+  .hamburger-btn{
+    display: none;
+  }
+}
+
 /*shelf css*/
 .game-card {
   text-align: center;
