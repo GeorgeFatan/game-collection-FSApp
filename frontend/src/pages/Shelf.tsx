@@ -116,7 +116,7 @@ export default function Shelf() {
         </Link>
       </div>
 
-      {/* Conținut centrat */}
+      {/* Continut centrat */}
       <div className="shelf-content">
         {games.length === 0 && <p>No games found.</p>}
 
