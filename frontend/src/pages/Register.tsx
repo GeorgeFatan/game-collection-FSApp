@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../RegisterPage.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -35,26 +36,26 @@ export default function Register() {
   }
 
   return (
-    <form onSubmit={handleRegister}>
-      <h2 style={{ marginTop: "100px" }}>Please register your account....</h2>
+    <form className="register-form"onSubmit={handleRegister}>
+      <h2 className="register-title">Please register your account....</h2>
 
       <input
-        style={{ marginRight: "15px" }}
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="register-input"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="register-input"
       />
       <button
-        className="nav-button"
+        className="nav-button register-button"
         type="submit"
-        style={{ marginLeft: "15px" }}
       >
         Register
       </button>
