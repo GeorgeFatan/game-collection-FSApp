@@ -1,0 +1,122 @@
+/* Game Details page CSS */
+
+.game-details-page{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    text-align: center;
+}
+
+/*Titlu */
+.game-details-title{
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: var(--text-h);
+}
+
+/* Layout imagine + detalii joc */
+.game-details-image{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+/*image joc */
+.game-details-cover{
+    width: 350px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(170,59,255,0.3);
+}
+
+/* sectiune descriere */
+.game-details-description{
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+   color: var(--text-h);
+}
+
+.game-details-description .nav-button {
+  width: 40%; /* ocupă 40% din container */
+  min-width: 180px;
+  max-width: 240px;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+/* info joc */
+.game-details-info-card{
+    background: rgba(255,255,255,0.1);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    color: var(--text-h);
+}
+
+/* rating joc personal */
+.game-details-rating-card{
+    background: rgba(255,255,255,0.1);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-top: 16px;
+}
+
+/* stars rating */
+
+.stars-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.star-box{
+    width: 48px;
+    height: 48px;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.star-row{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+/* responsive queries for mobile */
+@media (max-width: 768px){
+    .game-details-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .game-details-cover{
+        width: 100%;
+        height: 200px;
+    }
+
+    .game-details-title{
+        font-size: 32px;
+    }
+
+   
+
+    .shelf-buttons{
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .nav-button{
+        font-size: 12px;
+        padding: 5px 10px;
+        width: 90%;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+}

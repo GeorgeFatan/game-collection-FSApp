@@ -1,0 +1,104 @@
+/* Shelf page css*/
+
+.shelf-page{
+    padding:20px;
+    text-align: center;
+}
+
+/* Header */
+.shelf-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/*buttons*/
+.shelf-buttons{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.favorite-btn{
+    margin-left: 10px;
+}
+
+.shelf-content{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+/* game card */
+.game-card{
+    text-align: center;
+    max-width: 300px;
+    margin: 15px;
+}
+
+/* game card image */
+.game-cover {
+    width: 350px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(170,59,255, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.game-cover:hover{
+    transform: scale(1.03);
+}
+
+/* game card link */
+.game-link{
+    text-decoration: none;
+    color: var(--text-h);
+}
+
+/* add game button */
+.add-game-button{
+    margin-top: 10px;
+}
+
+/* responsive queries for mobile */
+@media (max-width: 768px){
+    .game-card{
+        max-width: 80%;
+        margin: 10px auto;
+        padding: 6px;
+    }
+
+    .game-cover{
+        width: 100%;
+        height: 140px;
+        margin-top: -20px;
+    }
+
+    .game-card h2{
+        font-size: 16px;
+        margin-top: 6px;
+    }
+
+    .shelf-buttons{
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .nav-button{
+        font-size: 12px;
+        padding: 5px 10px;
+        width: 90%;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+}
