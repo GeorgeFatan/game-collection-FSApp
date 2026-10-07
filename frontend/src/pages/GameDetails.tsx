@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "../style/GameDetailsPage.css";
 
 interface Game {
   id: number;
@@ -25,18 +27,13 @@ function StarRatingSistem({
   const boxes = [1, 2, 3, 4, 5];
 
   return (
-    <div className="flex justify-center mt-2">
-      <span className="inline-flex flex-row gap-2 items-center">
+    <div className="stars-container">
+      <span className="stars-row">
         {boxes.map((box) => (
           <span
             key={box}
             onClick={() => onChange(box)}
-            style={{
-              width: "48px",
-              height: "48px",
-              fontSize: "32px",
-              cursor: "pointer",
-            }}
+            className="star-box"
           >
             {box <= value ? "★" : "☆"}
           </span>
@@ -154,102 +151,87 @@ export function GameDetails() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-6">{game.title}</h1>
+  <div className="game-details-page">
+    <h1 className="game-details-title">{game.title}</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <img
-          src={game.coverUrl}
-          style={{
-            width: "350px",
-            height: "400px",
-            objectFit: "cover",
-            borderRadius: "6px",
-            marginTop: "10px",
-          }}
-          alt={game.title}
-        />
+    <div className="game-details-grid">
+      <img
+        src={game.coverUrl}
+        alt={game.title}
+        className="game-details-cover"
+      />
 
-        <div className="space-y-4">
-          <div className="text-gray-700">
-            {error && <p className="text-red-500">{error}</p>}
+      <div className="game-details-section">
+        <div className="game-details-description">
+          {error && <p className="error-text">{error}</p>}
 
-            {!isEditing && !game.description && (
+          {!isEditing && !game.description && (
+            <button className="nav-button" onClick={() => setIsEditing(true)}>
+              Add your wanted description
+            </button>
+          )}
+
+          {!isEditing && game.description && (
+            <div>
+              <p>{game.description}</p>
               <button className="nav-button" onClick={() => setIsEditing(true)}>
-                Add your wanted description
+                Edit description
               </button>
-            )}
+            </div>
+          )}
 
-            {!isEditing && game.description && (
-              <div>
-                <p>{game.description}</p>
+          {isEditing && (
+            <div className="edit-description">
+              <textarea
+                className="description-textarea"
+                rows={5}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+
+              <div className="edit-buttons">
                 <button
                   className="nav-button"
-                  onClick={() => setIsEditing(true)}
+                  onClick={handleSave}
+                  disabled={isSaving}
                 >
-                  Edit description
+                  {isSaving ? "Saving..." : "Save description"}
+                </button>
+
+                <button
+                  className="cancel-button"
+                  onClick={() => setIsEditing(false)}
+                >
+                  Cancel
                 </button>
               </div>
-            )}
-
-            {isEditing && (
-              <div className="mt-4">
-                <textarea
-                  className="w-full p-2 border rounded"
-                  rows={5}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-
-                <div className="mt-2 flex gap-4">
-                  <button
-                    className="nav-button"
-                    onClick={handleSave}
-                    disabled={isSaving}
-                  >
-                    {isSaving ? "Saving..." : "Save description"}
-                  </button>
-
-                  <button
-                    className="px-4 py-2 bg-red-600 text-white rounded"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="bg-white p-4 rounded-xl shadow-md space-y-2">
-            <p>
-              <span className="font-semibold">Genre:</span> {game.genre}
-            </p>
-            <p>
-              <span className="font-semibold">Release:</span> {game.releaseDate}
-            </p>
-            <p>
-              <span className="font-semibold">Rating:</span> {game.rating}
-            </p>
-          </div>
+            </div>
+          )}
         </div>
-        <div className="bg-white p-4 rounded-xl shadow-md mt-4">
-          <h3 className="font-semibold mb-2">Your rating for the game..</h3>
 
-          <div className="flex flex-row justify-center items-center gap-2 mt-2">
-            <StarRatingSistem
-              value={Math.ceil(personalRating / 2)}
-              onChange={(stars) => {
-                const rating = stars * 2;
-                setPersonalRating(rating);
-                savePersonalRating(rating);
-              }}
-            />
-          </div>
-
-          <p className="mt-2 text-lg font-bold">{personalRating}/10</p>
+        <div className="game-details-info-card">
+          <p><span className="font-semibold">Genre:</span> {game.genre}</p>
+          <p><span className="font-semibold">Release:</span> {game.releaseDate}</p>
+          <p><span className="font-semibold">Rating:</span> {game.rating}</p>
         </div>
       </div>
+
+      <div className="game-details-rating-card">
+        <h3 className="rating-title">Your rating for the game..</h3>
+
+        <StarRatingSistem
+          value={Math.ceil(personalRating / 2)}
+          onChange={(stars) => {
+            const rating = stars * 2;
+            setPersonalRating(rating);
+            savePersonalRating(rating);
+          }}
+        />
+
+        <p className="rating-value">{personalRating}/10</p>
+      </div>
     </div>
-  );
+  </div>
+);
+
 }

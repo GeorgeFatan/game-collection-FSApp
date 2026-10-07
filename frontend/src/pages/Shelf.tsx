@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import "../style/ShelfPage.css";
 
 interface Game {
   id: number;
@@ -134,9 +134,8 @@ export default function Shelf() {
               Delete Game
             </button>
             <button
-              className="nav-button"
+              className="nav-button favorite-btn"
               onClick={() => addToFavorite(game.id)}
-              style={{ marginLeft: "5px" }}
             >
               Add to Favorite
             </button>
