@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../style/LoginPage.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,26 +35,27 @@ export default function Login() {
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2 style={{ marginTop: "100px" }}>Please login to your account....</h2>
+    <form onSubmit={handleLogin} className="login-form">
+      <h2 className="login-title">Please login to your account....</h2>
 
       <input
-        style={{ marginRight: "15px" }}
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="login-input"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="login-input"
       />
       <button
-        className="nav-button"
+        className="nav-button login-button"
         type="submit"
-        style={{ marginLeft: "15px" }}
+        
       >
         Login
       </button>
