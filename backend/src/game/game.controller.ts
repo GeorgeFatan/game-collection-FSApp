@@ -93,4 +93,11 @@ export class GameController {
       body.isFavorite,
     );
   }
+
+  // favorite games counter
+  @UseGuards(JwtAuthGuard)
+  @Get('favorites/count')
+  getFavoriteCount(@User() user: AuthUser){
+    return this.gameService.getFavoriteCount(user.id);
+  }
 }
