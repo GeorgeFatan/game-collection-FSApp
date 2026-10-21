@@ -1,0 +1,44 @@
+
+.header{
+    padding: 40px;
+    text-align: center;
+}
+
+.paragraf-text-first{
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.paragraf-text-second{
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.6;
+}
+
+.paragraf-credits{
+    font-style: italic;
+    color: var(--accent)
+}
+
+@media (max-width: 768px)
+{
+    .header{
+        padding: 20px;
+    }
+
+    .paragraf-text-first,
+    .paragraf-text-second{
+        max-width: 95%;
+        font-size: 15px;
+        line-height: 1.4;
+        margin: 10px auto;
+    }
+
+    .paragraf-credits{
+        font-size: 14px;
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+}

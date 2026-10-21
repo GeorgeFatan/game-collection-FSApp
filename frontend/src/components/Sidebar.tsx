@@ -13,6 +13,10 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
 
+  // useState for counter fav games
+  const [favoriteCount, setFavoriteCount] = useState(0);
+
+
   useEffect(() => {
     fetch(`${API_URL}/me`, {
       headers: {
@@ -42,6 +46,23 @@ export default function Sidebar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []
   );
+
+
+  const fetchFavoriteCount = () => {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_URL}/games/favorites/count`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    .then((res) => res.json())
+    .then((data) => setFavoriteCount(data))
+    .catch(() => setFavoriteCount(0));
+  };
+  useEffect(() => {
+  fetchFavoriteCount();
+  }, [token]);
 
   if (!token || token === "undefined") {
     return null;
@@ -129,7 +150,7 @@ export default function Sidebar() {
             ➕ Add Game
           </a>
           <a href="/favorites" className="sidebar-link">
-            ⭐ Favorite Games
+            ⭐ Favorite Games ({favoriteCount})
           </a>
         </nav>
       </div>

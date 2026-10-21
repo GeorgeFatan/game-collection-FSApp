@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../style/AddGamePage.css";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -62,10 +64,10 @@ export default function AddGame() {
   }
 
   return (
-    <div className="add-game-page" style={{ marginTop: "20px" }}>
-      <h1>Add New Game To Collection</h1>
+    <div className="add-game-page">
+      <h1 className="add-game-title">Add New Game</h1>
 
-      <div className="form">
+      <div className="add-game-form">
         <input
           value={title}
           onChange={(e) => {
@@ -77,16 +79,11 @@ export default function AddGame() {
 
         <img
           src={coverUrl}
-          style={{
-            width: "50px",
-            height: "60px",
-            objectFit: "cover",
-            borderRadius: "6px",
-            marginTop: "10px",
-          }}
+          alt="Cover Preview"
+          className="add-game-cover-preview"
         />
 
-        <button onClick={handleAddGame} className="nav-button">
+        <button onClick={handleAddGame} className="nav-button add-game-button">
           Add Game
         </button>
       </div>
