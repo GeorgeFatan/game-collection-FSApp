@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Controller,
   Get,
@@ -97,7 +99,7 @@ export class GameController {
   // favorite games counter
   @UseGuards(JwtAuthGuard)
   @Get('favorites/count')
-  getFavoriteCount(@User() user: AuthUser){
+  getFavoriteCount(@User() user: AuthUser) {
     return this.gameService.getFavoriteCount(user.id);
   }
 }

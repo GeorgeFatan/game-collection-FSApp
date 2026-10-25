@@ -8,10 +8,34 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MainPage from "./pages/MainPage";
 import FavoriteGames from "./pages/FavoriteGames";
+import { useEffect } from "react";
+import "./backToTop.css";
 
 function App() {
+
+  useEffect( () => {
+    const handleScroll = () => {
+      const btn = document.getElementById("backToTop");
+      if(window.scrollY > 300){
+        btn?.classList.add("show");
+      }
+      else{
+        btn?.classList.remove("show");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({top: 0, behavior: "smooth"});
+  };
+
   return (
-    <Routes>
+    <div>
+<Routes>
       <Route path="/" element={<MainPage />} />
 
       <Route element={<Layout />}>
@@ -25,6 +49,10 @@ function App() {
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
     </Routes>
+
+    <button id="backToTop" onClick={scrollToTop}>↑</button>
+    </div>
+    
   );
 }
 
