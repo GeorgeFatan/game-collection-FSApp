@@ -13,11 +13,12 @@
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 6px 16px;
   border: 1px solid var(--accent-border);
   border-radius: 6px;
   background-color: rgba(192, 132, 252, 0.1);
   transition: all 0.3s ease;
+  margin-left: 15px;
 }
 
 @media (max-width: 768px){
