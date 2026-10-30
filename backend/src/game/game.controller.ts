@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
@@ -15,6 +16,7 @@ import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AuthUser, User } from '../auth/user.decorator';
 import { Request } from 'express';
+import { use } from 'passport';
 
 @Controller('games')
 export class GameController {
@@ -102,4 +104,35 @@ export class GameController {
   getFavoriteCount(@User() user: AuthUser) {
     return this.gameService.getFavoriteCount(user.id);
   }
+
+  // hours played
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/hours-played')
+  updateHoursPlayed(
+    @Param('id') id: string,
+    @Body('hoursPlayed') hoursPlayed: number,
+    @User() user: any,
+  ){
+    return this.gameService.updateHoursPlayed(
+      Number(id),
+      user.id,
+      hoursPlayed,
+    );
+  }
+
+  // lastplayed
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/last-played')
+  updateLastPlayed(
+    @Param('id') id: string,
+    @Body('lastPlayed') lastPlayed: string,
+    @User() user: any,
+  ){
+    return this.gameService.updateLastPlayed(
+      Number(id),
+      user.id,
+      new Date(lastPlayed),
+    );
+  }
+
 }
