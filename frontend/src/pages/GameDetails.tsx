@@ -13,6 +13,8 @@ interface Game {
   releaseDate: string;
   rating: string;
   personalRating?: number;
+  hoursPlayed?: number;
+  lastPlayed?: string;
 }
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
@@ -51,6 +53,8 @@ export function GameDetails() {
   const [personalRating, setPersonalRating] = useState<number>(0);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hoursPlayed, setHoursPlayed] = useState<number>(0);
+  const [lastPlayed, setLastPlayed] = useState<string>("");
 
   useEffect(() => {
     if (!id) return;
@@ -69,6 +73,12 @@ export function GameDetails() {
         // syncronize personal rating when we have the data
         if (data.personalRating !== undefined) {
           setPersonalRating(data.personalRating);
+        }
+        if(data.hoursPlayed !== undefined){
+          setHoursPlayed(data.hoursPlayed);
+        }
+        if(data.lastPlayed !== undefined && data.lastPlayed !== null){
+          setLastPlayed(data.lastPlayed.slice(0, 10)); 
         }
       })
       .catch((err) => console.error("Failed to load game:", err));
@@ -132,6 +142,36 @@ export function GameDetails() {
     } finally {
       setIsSaving(false);
     }
+  }
+
+  async function saveHoursPlayed() {
+    const token = localStorage.getItem("token");
+
+    await fetch(`${API_URL}/games/${game!.id}/hours-played`,{
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({hoursPlayed}),
+    });
+    setGame((prev) => prev ? {...prev, hoursPlayed} : prev);
+  }
+
+  async function saveLastPlayed() {
+    const token = localStorage.getItem("token");
+
+    await fetch(`${API_URL}/games/${game!.id}/last-played`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ lastPlayed }),
+      }
+    );
+    setGame((prev) => prev ? {...prev, lastPlayed} : prev);
   }
 
   if (!game) {
@@ -230,6 +270,40 @@ export function GameDetails() {
 
         <p className="rating-value">{personalRating}/10</p>
       </div>
+        
+      {/*GamePlay stats*/}
+      <div className="game-details-stats-card">
+        <h3 className="rating-title">Gameplay Stats</h3>
+
+        {/*Hours played*/}
+        <div className="stats-row">
+          <label>Total Hours Played: </label>
+          <input
+          type="number"
+          value={hoursPlayed}
+          onChange={(e) => setHoursPlayed(Number(e.target.value))}
+          className="stats-input"
+          />
+          
+          <button className="nav-button" onClick={saveHoursPlayed}>
+            Save
+          </button>
+        </div>
+        
+        {/*Last Played stat*/}
+        <div className="stats-row">
+          <label>Last Time Played: </label>
+          <input
+          type="date"
+          value={lastPlayed}
+          onChange={(e) => setLastPlayed(e.target.value)}
+          className="stats-input"
+          />
+          <button className="nav-button" onClick={saveLastPlayed}>Save</button>
+        </div>
+
+      </div>
+      
     </div>
   </div>
 );
