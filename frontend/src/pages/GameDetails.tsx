@@ -285,13 +285,13 @@ export function GameDetails() {
           className="stats-input"
           />
           
-          <button className="nav-button" onClick={saveHoursPlayed}>
+          <button className="nav-button stats-button" onClick={saveHoursPlayed}>
             Save
           </button>
         </div>
         
         {/*Last Played stat*/}
-        <div className="stats-row">
+        <div style={{marginTop: "10px"}} className="stats-row">
           <label>Last Time Played: </label>
           <input
           type="date"
@@ -299,7 +299,7 @@ export function GameDetails() {
           onChange={(e) => setLastPlayed(e.target.value)}
           className="stats-input"
           />
-          <button className="nav-button" onClick={saveLastPlayed}>Save</button>
+          <button className="nav-button stats-button" onClick={saveLastPlayed}>Save</button>
         </div>
 
       </div>

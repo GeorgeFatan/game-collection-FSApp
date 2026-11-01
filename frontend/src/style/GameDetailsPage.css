@@ -88,6 +88,11 @@
     align-items: center;
 }
 
+.stats-button{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 /* responsive queries for mobile */
 @media (max-width: 768px){
     .game-details-grid{
@@ -112,11 +117,15 @@
         margin-bottom: 5px;
     }
 
-    .nav-button{
+    
+    .nav-button.stats-button{
         font-size: 12px;
         padding: 5px 10px;
         width: 90%;
         margin: 0 auto;
         margin-bottom: 5px;
+        margin-top: 10px;
     }
+    
+   
 }
