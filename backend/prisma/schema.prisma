@@ -27,4 +27,6 @@ model Game {
   personalRating Int?
   isFavorite     Boolean @default(false)
   user           User    @relation(fields: [userId], references: [id])
+  hoursPlayed    Int? @default(0)
+  lastPlayed     DateTime?
 }

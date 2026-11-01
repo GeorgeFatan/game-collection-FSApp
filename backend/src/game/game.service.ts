@@ -107,4 +107,20 @@ export class GameService {
       },
     });
   }
+
+  // update hours played
+  async updateHoursPlayed(id: number, userId: number, hoursPlayed: number){
+    return this.prisma.game.updateMany({
+      where: { id, userId },
+      data: { hoursPlayed },
+    });
+  }
+
+  // update lastPlayed
+  async updateLastPlayed(id: number, userId: number, lastPlayed: Date){
+    return this.prisma.game.updateMany({
+      where: { id, userId },
+      data: { lastPlayed },
+    });
+  }
 }
