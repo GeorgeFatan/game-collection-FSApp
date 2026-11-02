@@ -110,9 +110,38 @@ export class GameService {
 
   // update hours played
   async updateHoursPlayed(id: number, userId: number, hoursPlayed: number){
-    return this.prisma.game.updateMany({
+
+    const game = await this.prisma.game.findFirst({
       where: { id, userId },
-      data: { hoursPlayed },
+    });
+
+    if (!game) return null;
+
+    const previous = game.hoursPlayed ?? 0;
+    const diff = hoursPlayed - previous;
+
+    // if you dont played today, nu adaugam in history
+    if (diff <= 0) {
+      return this.prisma.game.update({
+        where: { id },
+        data: { hoursPlayed },
+      });
+    }
+
+    const today = new Date().toISOString().slice(0, 10); // get only the date part
+    const history = Array.isArray(game.playHistory) ? game.playHistory : []; // ensure its an array
+
+    history.push({
+      date: today,
+      hours: diff,
+    });
+
+    return this.prisma.game.update({
+      where: { id },
+      data: {
+        hoursPlayed,
+        playHistory: history,
+      },
     });
   }
 
@@ -122,5 +151,43 @@ export class GameService {
       where: { id, userId },
       data: { lastPlayed },
     });
+  }
+
+  // get weekly activity method
+  async getWeeklyActivity(userId: number, days: number){
+    const games = await this.prisma.game.findMany({
+      where: { userId },
+    });
+
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+
+    const result: {
+      title: string;
+      total: number;
+      daily: { date: string; hours: number }[];
+    }[] = [];
+
+    for (const game of games) {
+      const history = Array.isArray(game.playHistory)
+        ? (game.playHistory as { date: string; hours: number }[])
+        : [];
+      const filteredHistory = history.filter((entry) => {
+        if (!entry || typeof entry.date !== 'string') return false;
+        return new Date(entry.date) >= cutoff;
+      });
+      const total = filteredHistory.reduce((sum, entry) => {
+        const hours = typeof entry.hours === 'number' ? entry.hours : 0;
+        return sum + hours;
+      }, 0);
+
+      if (total > 0) {
+        result.push({
+          title: game.title ?? 'Unknown Title',
+          total,
+          daily: filteredHistory,
+        });
+      }
+    }
   }
 }
