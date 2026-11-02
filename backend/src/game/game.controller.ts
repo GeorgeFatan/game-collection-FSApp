@@ -11,6 +11,7 @@ import {
   Patch,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -133,6 +134,16 @@ export class GameController {
       user.id,
       new Date(lastPlayed),
     );
+  }
+
+  // activity history endpoint
+  @UseGuards(JwtAuthGuard)
+  @Get('activity')
+  getWeeklyActivity(
+    @Query('days') days: string,
+    @User() user: any
+  ) {
+    return this.gameService.getWeeklyActivity(user.id, Number( days ?? 7 ));
   }
 
 }
