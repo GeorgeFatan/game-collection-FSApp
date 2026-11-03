@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../style/ShelfPage.css";
+import WeeklyChart from "../components/WeeklyChart";
 
 interface Game {
   id: number;
@@ -142,6 +143,10 @@ export default function Shelf() {
             {/*Add to favorite button*/}
           </div>
         ))}
+         {/* Weekly Activity Chart */}
+  <div style={{ marginTop: "40px" }}>
+    <WeeklyChart />
+  </div>
       </div>
     </div>
   );
