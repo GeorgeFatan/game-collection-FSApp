@@ -154,7 +154,7 @@ export class GameService {
   }
 
   // get weekly activity method
-  async getWeeklyActivity(userId: number, days: number){
+  async getWeeklyActivity(userId: number, days: number) {
     const games = await this.prisma.game.findMany({
       where: { userId },
     });
@@ -189,5 +189,6 @@ export class GameService {
         });
       }
     }
+    return result.sort((a, b) => b.total - a.total).slice(0, 10); // sort by total hours and return top 10
   }
 }
