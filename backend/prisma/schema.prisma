@@ -31,3 +31,4 @@ model Game {
   lastPlayed     DateTime?
   playHistory    Json?
 }
+ 
