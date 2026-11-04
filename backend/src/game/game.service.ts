@@ -109,8 +109,7 @@ export class GameService {
   }
 
   // update hours played
-  async updateHoursPlayed(id: number, userId: number, hoursPlayed: number){
-
+  async updateHoursPlayed(id: number, userId: number, hoursPlayed: number) {
     const game = await this.prisma.game.findFirst({
       where: { id, userId },
     });
@@ -146,7 +145,7 @@ export class GameService {
   }
 
   // update lastPlayed
-  async updateLastPlayed(id: number, userId: number, lastPlayed: Date){
+  async updateLastPlayed(id: number, userId: number, lastPlayed: Date) {
     return this.prisma.game.updateMany({
       where: { id, userId },
       data: { lastPlayed },
@@ -169,17 +168,31 @@ export class GameService {
     }[] = [];
 
     for (const game of games) {
-      const history = Array.isArray(game.playHistory)
-        ? (game.playHistory as { date: string; hours: number }[])
-        : [];
-      const filteredHistory = history.filter((entry) => {
-        if (!entry || typeof entry.date !== 'string') return false;
-        return new Date(entry.date) >= cutoff;
-      });
-      const total = filteredHistory.reduce((sum, entry) => {
-        const hours = typeof entry.hours === 'number' ? entry.hours : 0;
-        return sum + hours;
-      }, 0);
+      // dacă playHistory e null, undefined sau alt tip, îl ignorăm
+      if (!game.playHistory || typeof game.playHistory !== 'object') continue;
+
+      let history: { date: string; hours: number }[] = [];
+
+      try {
+        history = Array.isArray(game.playHistory)
+          ? (game.playHistory as { date: string; hours: number }[])
+          : [game.playHistory as { date: string; hours: number }];
+      } catch {
+        history = [];
+      }
+
+      const filteredHistory = history.filter(
+        (entry) =>
+          entry &&
+          typeof entry.date === 'string' &&
+          new Date(entry.date) >= cutoff,
+      );
+
+      const total = filteredHistory.reduce(
+        (sum, entry) =>
+          sum + (typeof entry.hours === 'number' ? entry.hours : 0),
+        0,
+      );
 
       if (total > 0) {
         result.push({
@@ -189,6 +202,7 @@ export class GameService {
         });
       }
     }
-    return result.sort((a, b) => b.total - a.total).slice(0, 10); // sort by total hours and return top 10
+
+    return result.sort((a, b) => b.total - a.total).slice(0, 10);
   }
 }

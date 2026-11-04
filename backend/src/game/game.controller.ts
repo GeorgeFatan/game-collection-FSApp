@@ -40,6 +40,17 @@ export class GameController {
     return this.gameService.findAll(user.id);
   }
 
+    // activity history endpoint
+  @UseGuards(JwtAuthGuard)
+  @Get('activity')
+  getWeeklyActivity(
+    @Query('days') days: string,
+    @User() user: any
+  ) {
+    return this.gameService.getWeeklyActivity(user.id, Number( days ?? 7 ));
+  }
+
+
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @User() user: any) {
@@ -51,7 +62,7 @@ export class GameController {
   create(@Body() data: any, @User() user: any) {
     return this.gameService.create(data, user.id);
   }
-
+  
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string, @User() user: any) {
@@ -135,15 +146,4 @@ export class GameController {
       new Date(lastPlayed),
     );
   }
-
-  // activity history endpoint
-  @UseGuards(JwtAuthGuard)
-  @Get('activity')
-  getWeeklyActivity(
-    @Query('days') days: string,
-    @User() user: any
-  ) {
-    return this.gameService.getWeeklyActivity(user.id, Number( days ?? 7 ));
-  }
-
 }
