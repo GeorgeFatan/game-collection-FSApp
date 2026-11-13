@@ -144,10 +144,10 @@ export default function Shelf() {
           </div>
         ))}
          {/* Weekly Activity Chart */}
-  <div style={{ marginTop: "40px" }}>
+      </div>
+      <div style={{ marginTop: "40px" }}>
     <WeeklyChart />
   </div>
-      </div>
     </div>
   );
 }
