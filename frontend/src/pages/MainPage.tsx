@@ -2,6 +2,8 @@ import {Link} from "react-router-dom";
 import {Outlet} from "react-router-dom";
 import "../style/MainPage.css";
 
+
+
 export default function MainPage(){
     return(
         <div className="header">

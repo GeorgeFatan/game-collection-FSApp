@@ -29,4 +29,6 @@ model Game {
   user           User    @relation(fields: [userId], references: [id])
   hoursPlayed    Int? @default(0)
   lastPlayed     DateTime?
+  playHistory    Json?
 }
+ 

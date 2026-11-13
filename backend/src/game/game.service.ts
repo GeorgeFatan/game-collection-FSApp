@@ -109,18 +109,100 @@ export class GameService {
   }
 
   // update hours played
-  async updateHoursPlayed(id: number, userId: number, hoursPlayed: number){
-    return this.prisma.game.updateMany({
+  async updateHoursPlayed(id: number, userId: number, hoursPlayed: number) {
+    const game = await this.prisma.game.findFirst({
       where: { id, userId },
-      data: { hoursPlayed },
+    });
+
+    if (!game) return null;
+
+    const previous = game.hoursPlayed ?? 0;
+    const diff = hoursPlayed - previous;
+
+    // if you dont played today, nu adaugam in history
+    if (diff <= 0) {
+      return this.prisma.game.update({
+        where: { id },
+        data: { hoursPlayed },
+      });
+    }
+
+    const today = new Date().toISOString().slice(0, 10); // get only the date part
+    const history = Array.isArray(game.playHistory) ? game.playHistory : []; // ensure its an array
+
+    history.push({
+      date: today,
+      hours: diff,
+    });
+
+    return this.prisma.game.update({
+      where: { id },
+      data: {
+        hoursPlayed,
+        playHistory: history,
+      },
     });
   }
 
   // update lastPlayed
-  async updateLastPlayed(id: number, userId: number, lastPlayed: Date){
+  async updateLastPlayed(id: number, userId: number, lastPlayed: Date) {
     return this.prisma.game.updateMany({
       where: { id, userId },
       data: { lastPlayed },
     });
+  }
+
+  // get weekly activity method
+  async getWeeklyActivity(userId: number, days: number) {
+    const games = await this.prisma.game.findMany({
+      where: { userId },
+    });
+
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+
+    const result: {
+      title: string;
+      total: number;
+      daily: { date: string; hours: number }[];
+    }[] = [];
+
+    for (const game of games) {
+      // dacă playHistory e null, undefined sau alt tip, îl ignorăm
+      if (!game.playHistory || typeof game.playHistory !== 'object') continue;
+
+      let history: { date: string; hours: number }[] = [];
+
+      try {
+        history = Array.isArray(game.playHistory)
+          ? (game.playHistory as { date: string; hours: number }[])
+          : [game.playHistory as { date: string; hours: number }];
+      } catch {
+        history = [];
+      }
+
+      const filteredHistory = history.filter(
+        (entry) =>
+          entry &&
+          typeof entry.date === 'string' &&
+          new Date(entry.date) >= cutoff,
+      );
+
+      const total = filteredHistory.reduce(
+        (sum, entry) =>
+          sum + (typeof entry.hours === 'number' ? entry.hours : 0),
+        0,
+      );
+
+      if (total > 0) {
+        result.push({
+          title: game.title ?? 'Unknown Title',
+          total,
+          daily: filteredHistory,
+        });
+      }
+    }
+
+    return result.sort((a, b) => b.total - a.total).slice(0, 10);
   }
 }

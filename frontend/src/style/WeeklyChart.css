@@ -1,0 +1,125 @@
+.weekly-card {
+  max-width: 850px;
+  margin: 50px auto 30px auto;
+  padding: 28px 32px;
+  background: rgba(20, 17, 34, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(170, 59, 255, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 0 28px rgba(170, 59, 255, 0.2);
+  text-align: left;
+}
+
+.weekly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(170, 59, 255, 0.2);
+}
+
+.weekly-title {
+  margin: 0;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.weekly-subtitle {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #a1a1aa;
+}
+
+.weekly-total-badge {
+  background: rgba(170, 59, 255, 0.15);
+  border: 1px solid rgba(170, 59, 255, 0.4);
+  padding: 10px 18px;
+  border-radius: 12px;
+  text-align: right;
+}
+
+.weekly-total-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #d8b4fe;
+}
+
+.weekly-total-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.weekly-chart-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  height: 200px;
+  margin-top: 24px;
+  padding: 24px 20px 14px 20px;
+  background: rgba(11, 9, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.weekly-day-col {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.weekly-day-col:hover .weekly-tooltip {
+  display: block;
+}
+
+
+.weekly-bar-hours {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e9d5ff;
+  margin-bottom: 8px;
+}
+
+.weekly-bar-hours.empty {
+  color: #52525b;
+}
+
+.weekly-bar {
+  width: 100%;
+  max-width: 42px;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(180deg, #c084fc 0%, #7e22ce 100%);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.45);
+  transition: height 0.4s ease, filter 0.2s ease;
+}
+
+.weekly-bar:hover {
+  filter: brightness(1.2);
+}
+
+.weekly-bar.empty {
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+
+
+.weekly-day-label {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #a1a1aa;
+}
+
+.weekly-day-label.today {
+  color: #c084fc;
+  font-weight: 700;
+}
+
+
