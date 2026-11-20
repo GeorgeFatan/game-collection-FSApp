@@ -1,0 +1,127 @@
+/* cardul principal */
+.showcase-card {
+  max-width: 850px;
+  margin: 0 auto 40px auto;
+  padding: 24px 32px;
+  background: rgba(20, 17, 34, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(170, 59, 255, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 0 28px rgba(170, 59, 255, 0.2);
+  text-align: left;
+}
+
+/*header*/
+.showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(170, 59, 255, 0.2);
+}
+
+.showcase-badge {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #d8b4fe;
+  background: rgba(170, 59, 255, 0.15);
+  border: 1px solid rgba(170, 59, 255, 0.4);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.showcase-subtitle {
+  font-size: 13px;
+  color: #a1a1aa;
+}
+
+/* coperta si info joc */
+.showcase-body {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(11, 9, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.showcase-cover {
+  width: 110px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.35);
+  flex-shrink: 0;
+}
+
+.showcase-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.showcase-game-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* card stats box */
+.showcase-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.showcase-stat-box {
+  background: rgba(170, 59, 255, 0.1);
+  border: 1px solid rgba(170, 59, 255, 0.25);
+  border-radius: 10px;
+  padding: 10px 16px;
+  min-width: 130px;
+}
+
+.showcase-stat-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #a1a1aa;
+  margin-bottom: 4px;
+}
+
+.showcase-stat-value {
+  font-size: 17px;
+  font-weight: 700;
+  color: #f3e8ff;
+}
+
+/* Responsive mmedia querry */
+@media (max-width: 600px) {
+  .showcase-card {
+    padding: 20px 16px;
+  }
+
+  .showcase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .showcase-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .showcase-cover {
+    width: 100%;
+    height: 180px;
+  }
+}
