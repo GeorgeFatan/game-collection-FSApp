@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../style/ShelfPage.css";
 import WeeklyChart from "../components/WeeklyChart";
+import MostPlayedShowcase from "../components/MostPlayedShowcase";
 
 interface Game {
   id: number;
@@ -148,6 +149,8 @@ export default function Shelf() {
       <div style={{ marginTop: "40px" }}>
     <WeeklyChart />
   </div>
+        {/*Most played game showcase (like steam :D) */}
+      <MostPlayedShowcase games={games} />
     </div>
   );
 }
