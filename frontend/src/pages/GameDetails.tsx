@@ -206,7 +206,7 @@ export function GameDetails() {
           {error && <p className="error-text">{error}</p>}
 
           {!isEditing && !game.description && (
-            <button className="nav-button" onClick={() => setIsEditing(true)}>
+            <button style={{marginTop: "10px"}}className="nav-button" onClick={() => setIsEditing(true)}>
               Add your wanted description
             </button>
           )}

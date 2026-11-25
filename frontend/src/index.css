@@ -156,6 +156,7 @@ body::before {
   border-radius: 6px;
   background-color: rgba(192, 132, 252, 0.1);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .nav-button:hover {

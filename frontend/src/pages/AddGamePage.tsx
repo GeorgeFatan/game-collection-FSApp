@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/AddGamePage.css";
 
@@ -15,31 +15,68 @@ export default function AddGame() {
   const [rating, setRating] = useState("");
   const rawgApiKey = import.meta.env.VITE_RAWG_KEY;
 
-  async function searchGame(title: string) {
-    if (title.length < 3) return;
-
-    try {
-      const res = await fetch(
-        `https://api.rawg.io/api/games?search=${title}&key=${rawgApiKey}`,
-      );
-      const data = await res.json();
-
-      if (!data.results || data.results.length === 0) return;
-
-      const game = data.results[0];
-
-      const detailsRes = await fetch(`${API_URL}/games/rawg/${game.id}`);
-      const details = await detailsRes.json();
-
-      setCoverUrl(game.background_image || "");
-      setGenre(game.genres?.map((g: any) => g.name).join(", ") || "");
-      setReleaseDate(game.released || "");
-      setDescription(details.description_raw || "");
-      setRating(game.rating?.toString() || "");
-    } catch (err) {
-      console.error("Error fetching game:", err);
+  useEffect(() => {
+    if (title.trim().length < 3) { // daca titlul are mai putin de 3 caractere, nu facem fetch la api
+       return;
     }
-  }
+    const debounceTimeout = setTimeout(async () => {
+      try{
+        const res = await fetch(
+          `https://api.rawg.io/api/games?search=${encodeURIComponent(
+            title,
+          )}&key=${rawgApiKey}`,
+        );
+        const data = await res.json();
+
+        if(!data.results || data.results.length === 0) return;
+
+        const game = data.results[0];
+
+        const detailsRes = await fetch(`${API_URL}/games/rawg/${game.id}`);
+        const details = await detailsRes.json();
+
+        setCoverUrl(game.background_image || "");
+        setGenre(game.genres?.map((g: any) => g.name).join(", ") || "");
+        setReleaseDate(game.released || "");
+        setDescription(details.description_raw || "");
+        setRating(game.rating?.toString() || "");
+      } catch (err) {
+        console.error("Error fetching game:", err);
+      }
+    }, 500);
+    return () => clearTimeout(debounceTimeout);
+  }, [title,rawgApiKey]);
+
+  // async function searchGame(title: string) {
+
+  //   // debounce search to avoid too many API calls
+
+  //   if (title.length < 3) return;
+
+  //   try {
+  //     const res = await fetch(
+  //       `https://api.rawg.io/api/games?search=${title}&key=${rawgApiKey}`,
+  //     );
+  //     const data = await res.json();
+
+  //     if (!data.results || data.results.length === 0) return;
+
+  //     const game = data.results[0];
+
+  //     const detailsRes = await fetch(`${API_URL}/games/rawg/${game.id}`);
+  //     const details = await detailsRes.json();
+
+  //     setCoverUrl(game.background_image || "");
+  //     setGenre(game.genres?.map((g: any) => g.name).join(", ") || "");
+  //     setReleaseDate(game.released || "");
+  //     setDescription(details.description_raw || "");
+  //     setRating(game.rating?.toString() || "");
+  //   } catch (err) {
+  //     console.error("Error fetching game:", err);
+  //   }
+    
+  // }
+   
 
   function handleAddGame() {
     const token = localStorage.getItem("token");
@@ -72,7 +109,7 @@ export default function AddGame() {
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
-            searchGame(e.target.value);
+            // searchGame(e.target.value); // onChange sets the tittle 
           }}
           placeholder="Title"
         />
