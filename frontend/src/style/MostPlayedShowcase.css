@@ -80,6 +80,18 @@
   gap: 14px;
 }
 
+.showcase-link{
+  display: inline-block;
+  width: fit-content;
+  align-self: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+
+.showcase-link:hover .showcase-game-title {
+  color: #e9d5ff;
+}
+
 .showcase-stat-box {
   background: rgba(170, 59, 255, 0.1);
   border: 1px solid rgba(170, 59, 255, 0.25);
