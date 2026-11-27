@@ -1,4 +1,5 @@
 import "../style/MostPlayedShowcase.css";
+import {Link} from "react-router-dom";
 
 interface MostPlayedGame{
     id: number | string;
@@ -54,8 +55,10 @@ export default function MostPlayedShowcase( {games} : MostPlayedShowcaseProps){
         )}
 
         <div className="showcase-info">
-          <h3 className="showcase-game-title">{topGame.title}</h3>
-
+          <Link to={`/game/${topGame.id}`} className="showcase-link">
+            <h3 className="showcase-game-title">{topGame.title}</h3>
+          </Link>
+          
           <div className="showcase-stats">
             <div className="showcase-stat-box">
               <span className="showcase-stat-label">Total Playtime</span>

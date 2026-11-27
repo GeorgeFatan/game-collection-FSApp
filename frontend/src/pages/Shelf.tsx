@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../style/ShelfPage.css";
 import WeeklyChart from "../components/WeeklyChart";
 import MostPlayedShowcase from "../components/MostPlayedShowcase";
+import RecentlyPlayed from "../components/RecentlyPlayedGame";
 
 interface Game {
   id: number;
@@ -149,8 +150,15 @@ export default function Shelf() {
       <div style={{ marginTop: "40px" }}>
     <WeeklyChart />
   </div>
-        {/*Most played game showcase (like steam :D) */}
+  <div>
+    {/*Most played game showcase (like steam :D) */}
       <MostPlayedShowcase games={games} />
+  </div>
+  <div>
+     {/*recently played showcase*/}
+    <RecentlyPlayed games={games} />
+  </div>
+       
     </div>
   );
 }
